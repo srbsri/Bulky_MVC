@@ -1,0 +1,34 @@
+﻿@model BulkyWeb.Models.Category
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1>Delete Categoty</h1>
+
+<h3>Are you sure you want to delete this?</h3>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" disabled class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="DisplayOrder" class="control-label"></label>
+                <input asp-for="DisplayOrder" disabled class="form-control" />
+            </div>
+            <div class="form-group pt-3">
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
