@@ -3,6 +3,7 @@ using BulkyBook.DataAccess.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BulkyBook.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240407094201_updateProductData")]
+    partial class updateProductData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,7 +110,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 1,
                             Author = "Billy Spark",
-                            Description = "Time-travelers, steampunk robots, dinosaurs, Martian invaders, superheroes, and adventures beyond imagining await you in CHANCE FORTUNE OUT OF TIME, \r\n\r\nthe latest volume in a series praised by Publishers.",
+                            Description = "Time-travelers, steampunk robots, dinosaurs, Martian invaders, superheroes, and adventures beyond imagining await you in CHANCE FORTUNE OUT OF TIME, the latest volume in a series praised by Publishers Weekly, VOYA, Young Adult Books Central, and many others.",
                             ISBN = "SWD9999001",
                             ListPrice = 99.0,
                             Price = 90.0,
@@ -119,7 +122,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 2,
                             Author = "Nancy Hoover",
-                            Description = "Money - investing, personal finance, and business decisions - is typically taught as a math-based field, where data and formulas tell us exactly what \r\n\r\nto do. But in the real world people don’t make.",
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "CAW777777701",
                             ListPrice = 40.0,
                             Price = 30.0,
@@ -131,7 +134,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 3,
                             Author = "Julian Button",
-                            Description = "The author has spent her career teaching people how to communicate for success. In her book How to Talk to Anyone, Lowndes offers 92 easy and effective \r\n\r\nsure-fire success techniques",
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "RITO5555501",
                             ListPrice = 55.0,
                             Price = 50.0,
@@ -143,7 +146,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 4,
                             Author = "Abby Muscles",
-                            Description = "In Thinking, Fast and Slow, Kahneman takes us on a ground-breaking tour of the mind and explains the two systems that drive the way we think and make \r\n\r\nchoices. One system is fast, intuitive and emotional.",
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "WS3333333301",
                             ListPrice = 70.0,
                             Price = 65.0,
@@ -155,7 +158,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 5,
                             Author = "Ron Parker",
-                            Description = "People think when you want to change your life, you need to think big. But world-renowned habits expert James Clear has discovered another way. He knows \r\n\r\nthat real change comes from the compound effect.",
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "SOTJ1111111101",
                             ListPrice = 30.0,
                             Price = 27.0,
@@ -167,7 +170,7 @@ namespace BulkyBook.DataAccess.Migrations
                         {
                             Id = 6,
                             Author = "Laura Phantom",
-                            Description = "In this generation-defining self-help guide, a superstar blogger cuts through the crap to show us how to stop trying to be positive all the time so \r\n\r\nthat we can truly become better, happier people. ",
+                            Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
                             ISBN = "FOT000000001",
                             ListPrice = 25.0,
                             Price = 23.0,

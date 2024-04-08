@@ -1,7 +1,5 @@
-﻿using BulkyBook.DataAccess;
-using BulkyBook.DataAccess.Data;
+﻿using BulkyBook.Models;
 using BulkyBook.DataAccess.Repository.IRepository;
-using BulkyBook.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
@@ -24,7 +22,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         public IActionResult Index()
         {
             //List<Product> objProductList = _productRepo.GetAll().ToList();
-            List<Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
             return View(objProductList);
         }

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BulkyBook.DataAccess
+namespace BulkyBook.Models
 {
     public class Product
     {
@@ -41,7 +41,5 @@ namespace BulkyBook.DataAccess
         [Range(1, 1000)]
         [DisplayName("Price for 100+")]
         public double Price100 { get; set; }
-
-
     }
 }
