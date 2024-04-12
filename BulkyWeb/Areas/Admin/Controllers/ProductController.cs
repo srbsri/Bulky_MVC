@@ -3,6 +3,7 @@ using BulkyBook.DataAccess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BulkyBook.Models.ViewModels;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -30,17 +31,29 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
         public IActionResult Create()
         {
-            IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
-                .GetAll().Select(u=> new SelectListItem
+            //IEnumerable<SelectListItem> CategoryList = _unitOfWork.Category
+            //   .GetAll().Select(u => new SelectListItem
+            //   {
+            //       Text = u.Name,
+            //       Value = u.Id.ToString()
+            //   });
+            //ViewBag.CategoryList = CategoryList;
+            //ViewData["CategoryList"] = CategoryList;
+            ProductVM productVM = new()
             {
-                Text= u.Name,
-                Value=u.Id.ToString()
-            });
-            ViewBag.CategoryList = CategoryList;
-            return View();
+                CategoryList = _unitOfWork.Category
+                .GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                }),
+            Product = new Product()
+            };
+            return View(productVM);
         }
         [HttpPost]
-        public IActionResult Create(Product obj)
+        //public IActionResult Create(Product obj)
+        public IActionResult Create(ProductVM productVM)
         {
             
             if (ModelState.IsValid)
@@ -49,12 +62,24 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 //_db.SaveChanges();  //go to the database and create the product
                 //_productRepo.Add(obj); 
                 //_productRepo.Save();
-                _unitOfWork.Product.Add(obj);
+
+                //_unitOfWork.Product.Add(obj);
+                _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product Created Successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+            else
+            {
+                productVM.CategoryList = _unitOfWork.Category
+                .GetAll().Select(u => new SelectListItem
+                {
+                    Text = u.Name,
+                    Value = u.Id.ToString()
+                });
+                TempData["error"] = "There is some Error";
+                return View(productVM);
+            }
         }
         public IActionResult Edit(int? id)
         {
