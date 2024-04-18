@@ -19,7 +19,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll().ToList();
+            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
 
             return View(objProductList);
         }
