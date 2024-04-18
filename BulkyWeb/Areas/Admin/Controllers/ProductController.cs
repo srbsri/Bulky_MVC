@@ -10,25 +10,15 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
     [Area("Admin")]
     public class ProductController : Controller
     {
-        //private readonly ApplicationDbContext _db;
-        //private readonly IProductRepository _productRepo;
         private readonly IUnitOfWork _unitOfWork;
-
-        private readonly IWebHostEnvironment _webHostEnvironment;
-
-
-        //public ProductController(ApplicationDbContext db)
-        //public ProductController(IProductRepository db)
+        private readonly IWebHostEnvironment _webHostEnvironment;        
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
-        {
-            //_db = db;
-            //_productRepo= db;
+        {            
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            //List<Product> objProductList = _productRepo.GetAll().ToList();
             List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll().ToList();
 
             return View(objProductList);
@@ -56,8 +46,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 productVM.Product = _unitOfWork.Product.Get(u => u.Id == id);
                 return View(productVM);
             }
-
         }
+
         [HttpPost]
         public IActionResult Upsert(ProductVM productVM, IFormFile? file)
         {
@@ -74,11 +64,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     {
                         file.CopyTo(fileStream);
                     }
-
                     productVM.Product.ImageUrl= @"\images\product\"+ fileName;
                 }
-
-
                 _unitOfWork.Product.Add(productVM.Product);
                 _unitOfWork.Save();
                 TempData["success"] = "Product Created Successfully";
@@ -94,7 +81,6 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 });
                 TempData["error"] = "There is some Error";
                 return View(productVM);
-
             }
         }
 
@@ -103,32 +89,22 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             if (id == null || id == 0)
             {
                 return NotFound();
-            }
-            //Product? productFromDb = _db.Categories.FirstOrDefault(c => c.Id == id);
-            //Product? productFromDb = _productRepo.Get(u => u.Id == id);
+            }            
             Product? productFromDb = _unitOfWork.Product.Get(u => u.Id == id);
             if (productFromDb == null)
             {
                 return NotFound();
             }
-
             return View(productFromDb);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
-            //Product? obj = _db.Categories.FirstOrDefault(obj => obj.Id == id);
-            //Product? obj = _productRepo.Get(u => u.Id == id);
             Product? obj = _unitOfWork.Product.Get(u => u.Id == id);
             if (obj == null)
             {
                 return NotFound();
-            }
-
-            //_db.Categories.Remove(obj);
-            //_db.SaveChanges();
-            //_productRepo.Remove(obj);
-            //_productRepo.Save();
+            }            
             _unitOfWork.Product.Remove(obj);
             _unitOfWork.Save();
             TempData["success"] = "Product deleted successfully";
