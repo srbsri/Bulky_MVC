@@ -60,13 +60,35 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     string fileName= Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
                     var productPath= Path.Combine(wwwRootPath, @"images\product");
 
+                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
+                    {
+                        //delete the old images
+                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);
+                        }
+                    }                        
+
                     using( var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
                     productVM.Product.ImageUrl= @"\images\product\"+ fileName;
                 }
+
+                if (productVM.Product.Id== 0)
+                {
+                //means this is a add
                 _unitOfWork.Product.Add(productVM.Product);
+                }
+                else
+                {
+                    //means this is a update
+                _unitOfWork.Product.Update(productVM.Product);
+
+                }
                 _unitOfWork.Save();
                 TempData["success"] = "Product Created Successfully";
                 return RedirectToAction("Index");
