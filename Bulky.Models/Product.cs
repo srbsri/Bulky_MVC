@@ -26,7 +26,7 @@ namespace BulkyBook.Models
 
         [Required]
         [Range(1,1000)]
-        [DisplayName("List Price")]
+        [DisplayName("List Price (MRP)")]
         public double ListPrice { get; set; }
 
         [Required]
