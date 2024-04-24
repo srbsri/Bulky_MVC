@@ -137,8 +137,8 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-            return Json(new { objProductList });
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
+            return Json(new {data= objProductList });
         }
         #endregion
     }
