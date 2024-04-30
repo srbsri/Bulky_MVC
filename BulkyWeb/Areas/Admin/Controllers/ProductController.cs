@@ -11,15 +11,15 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
     public class ProductController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment;        
+        private readonly IWebHostEnvironment _webHostEnvironment;
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
-        {            
+        {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
-            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
+            List<BulkyBook.Models.Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
 
             return View(objProductList);
         }
@@ -53,12 +53,12 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                string wwwRootPath= _webHostEnvironment.WebRootPath;
+                string wwwRootPath = _webHostEnvironment.WebRootPath;
 
-                if (file!= null)
+                if (file != null)
                 {
-                    string fileName= Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                    var productPath= Path.Combine(wwwRootPath, @"images\product");
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
+                    var productPath = Path.Combine(wwwRootPath, @"images\product");
 
                     if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
                     {
@@ -69,28 +69,29 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                         {
                             System.IO.File.Delete(oldImagePath);
                         }
-                    }                        
+                    }
 
-                    using( var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
+                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
-                    productVM.Product.ImageUrl= @"\images\product\"+ fileName;
+                    productVM.Product.ImageUrl = @"\images\product\" + fileName;
                 }
 
-                if (productVM.Product.Id== 0)
+                if (productVM.Product.Id == 0)
                 {
-                //means this is a add
-                _unitOfWork.Product.Add(productVM.Product);
+                    //means this is a add
+                    _unitOfWork.Product.Add(productVM.Product);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Product Created Successfully";
                 }
                 else
                 {
                     //means this is a update
-                _unitOfWork.Product.Update(productVM.Product);
-
+                    _unitOfWork.Product.Update(productVM.Product);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Product Updated Successfully";
                 }
-                _unitOfWork.Save();
-                TempData["success"] = "Product Created Successfully";
                 return RedirectToAction("Index");
             }
             else
@@ -105,13 +106,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 return View(productVM);
             }
         }
-        
+
         #region API CALLS
         [HttpGet]
         public IActionResult GetAll()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
-            return Json(new {data= objProductList });
+            return Json(new { data = objProductList });
         }
         [HttpDelete]
         public IActionResult Delete(int? id)
